@@ -1,0 +1,21 @@
+[
+ {
+  "directory": "C:\\Users\\usuario\\_projects\\hanoi",
+  "arguments": [
+   "gcc",
+   "-Wall",
+   "-Wextra",
+   "-o",
+   "build/main",
+   "./main.c",
+   "-I",
+   "include",
+   "-L",
+   "lib",
+   "-lraylib",
+   "-lgdi32",
+   "-lwinmm"
+  ],
+  "file": "./main.c"
+ }
+]
