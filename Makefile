@@ -1,5 +1,5 @@
-srcs = $(shell find -name '*.c')
-headers = $(shell find -include -name '*.h')
+srcs = $(shell find -name "*.c")
+headers = $(shell find -include -name "*.h")
 
 all: build/main
 
