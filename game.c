@@ -14,8 +14,8 @@ Column* GetActiveCol(int x, int y) {
         Column *col = game->cols[i];
 
         if(
-            x >= col->pos.x - 20 &&
-            x <= col->pos.x + 20 &&
+            x >= col->pos.x - 50 &&
+            x <= col->pos.x + 50 &&
             y <= SCREEN_HEIGHT - BOTTOM_OFFSET &&
             y >= col->pos.y
         ) {
