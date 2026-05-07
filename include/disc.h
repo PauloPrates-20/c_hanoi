@@ -18,7 +18,7 @@ typedef struct Disc {
 } Disc;
 
 void RenderDisc(Disc *self);
-void MoveDisc(Disc *self, Column *col);
+bool MoveDisc(Disc *self, Column *col);
 Disc* MakeDisc(int size, int x, int y, Color color, Column *col);
 
 extern Color discColors[MAX_DISCS];

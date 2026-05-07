@@ -17,7 +17,7 @@ Disc* MakeDisc(int size, int x, int y, Color color, Column *col) {
     return disc;
 }
 
-void MoveDisc(Disc *self, Column *col) {
+bool MoveDisc(Disc *self, Column *col) {
     if(self->col != col) {
         if(DiscStackEmpty(col->discs)) {
             UnstackDisc(self->col->discs);
@@ -25,14 +25,20 @@ void MoveDisc(Disc *self, Column *col) {
             self->col = col;
             self->pos.x = col->pos.x;
             self->pos.y = SCREEN_HEIGHT - BOTTOM_OFFSET - DISC_HEIGHT;
+
+            return true;
         } else if(DiscStackTop(col->discs)->size > self->size) {
             UnstackDisc(self->col->discs);
+            self->pos.y = DiscStackTop(col->discs)->pos.y - DISC_HEIGHT;
             StackDisc(self, col->discs);
             self->col = col;
             self->pos.x = col->pos.x;
-            self->pos.y = DiscStackTop(col->discs)->pos.y - DISC_HEIGHT;
+
+            return true;
         }
     }
+
+    return false;
 }
 
 void RenderDisc(Disc *self) {

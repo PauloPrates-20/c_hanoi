@@ -4,8 +4,10 @@
 #include "discstack.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 Game *game = NULL;
+char counter[20] = "";
 
 Column* GetActiveCol(int x, int y) {
     for(ColTypes i = SOURCE; i < COL_COUNT; i++) {
@@ -35,7 +37,10 @@ void HandleClick() {
             if(game->active == NULL) {
                 if(!DiscStackEmpty(activeCol->discs)) game->active = DiscStackTop(activeCol->discs);
             } else {
-                MoveDisc(game->active, activeCol);
+                if(MoveDisc(game->active, activeCol)) {
+                    game->move_count++;
+                    sprintf(counter, "MOVES: %d", game->move_count);
+                }
                 game->active = NULL;
             }
         } else {
@@ -48,6 +53,7 @@ void InitGame() {
     game = malloc(sizeof(Game));
 
     game->disc_count = 3;
+    game->move_count = 0;
     game->min_moves = pow(2.0, (double)game->disc_count) - 1;
     game->finished = false;
     game->active = NULL;
@@ -72,6 +78,8 @@ void InitGame() {
         StackDisc(game->discs[i], game->cols[SOURCE]->discs);
     }
 
+    sprintf(counter, "MOVES: %d", game->move_count);
+
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hanoi");
     SetTargetFPS(TARGET_FPS);
 }
@@ -94,6 +102,8 @@ void RenderGame() {
 
     ClearBackground(RAYWHITE);
     DrawRectangle(0, SCREEN_HEIGHT - BOTTOM_OFFSET, SCREEN_WIDTH, BOTTOM_OFFSET, BROWN);
+
+    DrawText(counter, (SCREEN_WIDTH - MeasureText(counter, 20))/2, 75, 20, BLACK);
 
     for(ColTypes i = SOURCE; i < COL_COUNT; i++) {
         RenderColumn(game->cols[i]);
