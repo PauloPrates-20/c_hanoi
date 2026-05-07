@@ -40,6 +40,7 @@ void HandleClick() {
                 if(MoveDisc(game->active, activeCol)) {
                     game->move_count++;
                     sprintf(counter, "MOVES: %d", game->move_count);
+                    game->finished = DiscStackFull(game->cols[DEST]->discs);
                 }
                 game->active = NULL;
             }
@@ -86,11 +87,13 @@ void InitGame() {
 
 void LoopGame() {
     while(!WindowShouldClose()) {
-        HandleClick();
-        for(int i = 0; i < game->disc_count; i++) {
-            game->discs[i]->active = false;
-            if(game->discs[i] == game->active) {
-                game->discs[i]->active = true;
+        if(!game->finished) {
+            HandleClick();
+            for(int i = 0; i < game->disc_count; i++) {
+                game->discs[i]->active = false;
+                if(game->discs[i] == game->active) {
+                    game->discs[i]->active = true;
+                }
             }
         }
         RenderGame();
@@ -103,7 +106,12 @@ void RenderGame() {
     ClearBackground(RAYWHITE);
     DrawRectangle(0, SCREEN_HEIGHT - BOTTOM_OFFSET, SCREEN_WIDTH, BOTTOM_OFFSET, BROWN);
 
-    DrawText(counter, (SCREEN_WIDTH - MeasureText(counter, 20))/2, 75, 20, BLACK);
+    if(!game->finished) {
+        DrawText(counter, (SCREEN_WIDTH - MeasureText(counter, 20))/2, 75, 20, BLACK);
+    } else {
+        DrawText("CONGRATULATIONS!!!", (SCREEN_WIDTH - MeasureText("CONGRATULATIONS!!!", 20))/2, 75, 20, BLACK);
+        DrawText("PRESS 'ESC' TO CLOSE GAME", (SCREEN_WIDTH - MeasureText("PRESS 'ESC' TO CLOSE GAME", 20))/2 , 105, 20, BLACK);
+    }
 
     for(ColTypes i = SOURCE; i < COL_COUNT; i++) {
         RenderColumn(game->cols[i]);
