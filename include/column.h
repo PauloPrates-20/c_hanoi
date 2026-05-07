@@ -14,6 +14,8 @@ typedef enum ColType {
     DEST,
 } ColTypes;
 
+struct DiscStack;
+
 #define COL_COUNT 3
 #define COL_GAP (SCREEN_WIDTH - (COL_WIDTH*COL_COUNT) - (SIDE_GAPS*2))/(COL_COUNT - 1)
 
@@ -21,8 +23,7 @@ typedef struct Disc Disc;
 
 typedef struct Column {
     Vector2 pos;
-    Disc **discs;
-    Disc *last_disc;
+    struct DiscStack *discs;
     ColTypes type;
 } Column;
 

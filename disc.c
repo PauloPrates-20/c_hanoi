@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "column.h"
 
+Color discColors[MAX_DISCS] = {RED, GREEN, BLUE, YELLOW, PURPLE, ORANGE, MAGENTA};
+
 Disc* MakeDisc(int size, int x, int y, Color color, Column *col) {
     Disc *disc = malloc(sizeof(Disc));
 
@@ -14,14 +16,7 @@ Disc* MakeDisc(int size, int x, int y, Color color, Column *col) {
 }
 
 void MoveDisc(Disc *self, Column *col) {
-    if(ColIsEmpty(col)) {
-        self->col = col;
-        self->pos = col->pos;
-    } else if(col->last_disc->size > self->size) {
-        self->col = col;
-        self->pos.x = col->pos.x;
-        self->pos.y = col->last_disc->pos.y - DISC_HEIGHT;
-    }
+    // TODO
 }
 
 void RenderDisc(Disc *self) {

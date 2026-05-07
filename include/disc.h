@@ -5,6 +5,7 @@
 
 #define DISC_HEIGHT 20
 #define BASE_DISC_WIDTH 30
+#define MAX_DISCS 7
 
 typedef struct Column Column;
 
@@ -18,5 +19,7 @@ typedef struct Disc {
 void RenderDisc(Disc *self);
 void MoveDisc(Disc *self, Column *col);
 Disc* MakeDisc(int size, int x, int y, Color color, Column *col);
+
+extern Color discColors[MAX_DISCS];
 
 #endif // DISC_H
