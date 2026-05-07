@@ -11,6 +11,7 @@ typedef struct Game {
     int move_count;
     int min_moves;
     Disc **discs;
+    Disc *active;
     Column **cols;
     int disc_count;
     bool finished;

@@ -14,6 +14,7 @@ typedef struct Disc {
     Vector2 pos;
     int size;
     Column *col;
+    bool active;
 } Disc;
 
 void RenderDisc(Disc *self);

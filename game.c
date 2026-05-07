@@ -7,12 +7,50 @@
 
 Game *game = NULL;
 
+Column* GetActiveCol(int x, int y) {
+    for(ColTypes i = SOURCE; i < COL_COUNT; i++) {
+        Column *col = game->cols[i];
+
+        if(
+            x >= col->pos.x - 20 &&
+            x <= col->pos.x + 20 &&
+            y <= SCREEN_HEIGHT - BOTTOM_OFFSET &&
+            y >= col->pos.y
+        ) {
+            return col;
+        }
+    }
+
+    return NULL;
+}
+
+void HandleClick() {
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        int x = GetMouseX();
+        int y = GetMouseY();
+
+        Column *activeCol = GetActiveCol(x, y);
+        
+        if(activeCol != NULL) {
+            if(game->active == NULL) {
+                if(!DiscStackEmpty(activeCol->discs)) game->active = DiscStackTop(activeCol->discs);
+            } else {
+                MoveDisc(game->active, activeCol);
+                game->active = NULL;
+            }
+        } else {
+            game->active = NULL;
+        }
+    }
+}
+
 void InitGame() {
     game = malloc(sizeof(Game));
 
     game->disc_count = 3;
     game->min_moves = pow(2.0, (double)game->disc_count) - 1;
     game->finished = false;
+    game->active = NULL;
     game->cols = malloc(sizeof(Column*)*COL_COUNT);
     game->discs = malloc(sizeof(Disc*)*game->disc_count);
 
@@ -40,6 +78,13 @@ void InitGame() {
 
 void LoopGame() {
     while(!WindowShouldClose()) {
+        HandleClick();
+        for(int i = 0; i < game->disc_count; i++) {
+            game->discs[i]->active = false;
+            if(game->discs[i] == game->active) {
+                game->discs[i]->active = true;
+            }
+        }
         RenderGame();
     }
 }
