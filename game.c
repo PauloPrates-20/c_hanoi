@@ -117,17 +117,19 @@ void RenderGame() {
 }
 
 void EndGame() {
-    CloseWindow();
-
     for(int i = 0; i < game->disc_count; i++) {
         free(game->discs[i]);
     }
     free(game->discs);
 
     for(ColTypes i = SOURCE; i < COL_COUNT; i++) {
+        free(game->cols[i]->discs->items);
+        free(game->cols[i]->discs);
         free(game->cols[i]);
     }
     free(game->cols);
 
     free(game);
+
+    CloseWindow();
 }
