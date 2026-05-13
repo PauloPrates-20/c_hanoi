@@ -1,11 +1,11 @@
 #ifndef DISC_H
 #define DISC_H
 
+#include "config.h"
 #include "raylib.h"
 
 #define DISC_HEIGHT 20
 #define BASE_DISC_WIDTH 30
-#define MAX_DISCS 7
 
 typedef struct Column Column;
 

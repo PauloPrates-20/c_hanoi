@@ -17,7 +17,7 @@ typedef struct Game {
     bool finished;
 } Game;
 
-void InitGame();
+void InitGame(int discs);
 void EndGame();
 void RenderGame();
 void LoopGame();

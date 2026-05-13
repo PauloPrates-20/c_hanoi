@@ -50,10 +50,10 @@ void HandleClick() {
     }
 }
 
-void InitGame() {
+void InitGame(int discs) {
     game = malloc(sizeof(Game));
 
-    game->disc_count = 3;
+    game->disc_count = discs;
     game->move_count = 0;
     game->min_moves = pow(2.0, (double)game->disc_count) - 1;
     game->finished = false;
