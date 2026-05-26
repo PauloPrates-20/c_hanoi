@@ -1,7 +1,5 @@
 # Torre de Hanoi em C
 
-===
-
 Uma versão simples do jogo ***Torre de Hanoi*** desenvolvido em ***C***.
 
 ## Como rodar?
